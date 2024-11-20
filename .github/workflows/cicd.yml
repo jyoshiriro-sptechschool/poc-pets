@@ -1,4 +1,4 @@
-# é necessário criar as variáveis DEPLOY_HOST, DEPLOY_KEY, NOME_ARQUIVO_PEM e NOME_ARQUIVO_JAR
+# é necessário criar as variáveis DEPLOY_HOST, DEPLOY_KEY, NOME_ARQUIVO_PEM e NOME_ARQUIVO_JAR.
 name: CI/CD para Spring Boot com Maven e publicação em EC2
 
 on:
