@@ -2,7 +2,7 @@
 set -xe
 
 # Nome do processo a ser iniciado (substitua por seu comando)
-processo="java -jar /home/ubuntu/deplay-api/api-pets-0.0.1-SNAPSHOT.jar"
+processo="java -jar /home/ubuntu/deploy-api/api-pets-0.0.1-SNAPSHOT.jar"
 
 # Iniciando o processo em background e capturando o PID
 pid=$(nohup $processo &)

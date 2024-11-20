@@ -3,4 +3,4 @@ set -x
 
 kill -9 ${API_PID}
 
-sh api-start.sh
+sh /home/ubuntu/deploy-api/api-start.sh
