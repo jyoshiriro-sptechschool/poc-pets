@@ -45,8 +45,8 @@ jobs:
       env:
         DEPLOY_KEY: ${{ secrets.DEPLOY_KEY }}
       run: |
-        echo "$DEPLOY_KEY" >> $HOME/$NOME_ARQUIVO_PEM
-        chmod 400 $HOME/$NOME_ARQUIVO_PEM
+        echo "$DEPLOY_KEY" >> $HOME/key.pem
+        chmod 400 $HOME/key.pem
 
     - name: Enviar o JAR p/ a EC2
       uses: appleboy/scp-action@master
