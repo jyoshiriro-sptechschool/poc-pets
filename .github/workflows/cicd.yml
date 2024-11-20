@@ -17,7 +17,7 @@ jobs:
     - name: Definindo a versão da JDK 
       uses: actions/setup-java@v2
       with:
-        distribution: 'corretto' # ver opções em https://github.com/actions/setup-java?tab=readme-ov-file#supported-distributions
+        distribution: 'temurin' # ver opções em https://github.com/actions/setup-java?tab=readme-ov-file#supported-distributions
         java-version: '11'
 
     - name: Build com Maven
