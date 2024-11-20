@@ -4,7 +4,7 @@ name: CI/CD para Spring Boot com Maven e publicação em EC2
 on:
   push:
     branches:
-      - pre-aula
+      - main
 
 jobs:
   build:
