@@ -26,13 +26,13 @@ jobs:
     - name: Gerar artefato Github com o .jar gerado
       uses: actions/upload-artifact@v4
       with:
-        name: packaged-application
+        name: aplicacao
         path: api-pets-completa/target/*.jar
 
     - name: Gerar artefato Github com os arquivos .sh
       uses: actions/upload-artifact@v4        
       with:
-        name: packaged-application2
+        name: scripts
         path: .github/scrips/*.sh     
 
   deploy:
@@ -43,8 +43,14 @@ jobs:
     - name: Recuperar artefato
       uses: actions/download-artifact@v4
       with:
-        name: packaged-application
+        name: aplicacao
         path: ./
+
+    - name: Recuperar scripts
+      uses: actions/download-artifact@v4
+      with:
+        name: scripts
+        path: ./        
 
     - name: Criar arquivo .pem a partir da variável DEPLOY_KEY e fazer o chmod 400 nele
       id: setup-key
@@ -61,6 +67,15 @@ jobs:
         username: ubuntu
         key: ${{ secrets.DEPLOY_KEY }}
         source: "./*.jar"
+        target: "/home/ubuntu/deploy-api/"
+
+    - name: Enviar os Scripts p/ a EC2
+      uses: appleboy/scp-action@master
+      with:
+        host: ${{ secrets.DEPLOY_HOST }}
+        username: ubuntu
+        key: ${{ secrets.DEPLOY_KEY }}
+        source: "./*.sh"
         target: "/home/ubuntu/deploy-api/"
 
     - name: Conectar via SSH à EC2 privada para implantar e reiniciar a API
