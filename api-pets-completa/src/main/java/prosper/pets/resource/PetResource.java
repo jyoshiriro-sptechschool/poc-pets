@@ -29,7 +29,7 @@ public class PetResource {
     private PetService petService;
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    @Secured({"ROLE_usuario", "ROLE_admin"})
+//    @Secured({"ROLE_usuario", "ROLE_admin"})
     @ApiResponses({
         @ApiResponse(responseCode = "200", description = "Consulta retornou dados"),
         @ApiResponse(responseCode = "204", description = "Consulta não retornou nenhum dado", content = @Content(schema = @Schema(implementation = Void.class)))
@@ -39,7 +39,7 @@ public class PetResource {
     }
 
     @GetMapping(path = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    @Secured({"ROLE_usuario", "ROLE_admin"})
+//    @Secured({"ROLE_usuario", "ROLE_admin"})
     @ApiResponses({
         @ApiResponse(responseCode = "200", description = "Consulta retornou dados"),
         @ApiResponse(responseCode = "404", description = "Consulta não retornou nenhum dado", content = @Content(schema = @Schema(implementation = Void.class)))
@@ -49,7 +49,7 @@ public class PetResource {
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    @Secured("ROLE_admin")
+//    @Secured("ROLE_admin")
     @ApiResponses({
         @ApiResponse(responseCode = "201", description = "Registro criado com sucesso"),
         @ApiResponse(responseCode = "400", description = "Erro de validação nos dados de entrada", content = @Content(schema = @Schema(implementation = Void.class)))
@@ -60,7 +60,7 @@ public class PetResource {
     }
 
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    @Secured("ROLE_admin")
+//    @Secured("ROLE_admin")
     @ApiResponses({
         @ApiResponse(responseCode = "200", description = "Registro atualizado com sucesso"),
         @ApiResponse(responseCode = "404", description = "id inválido", content = @Content(schema = @Schema(implementation = Void.class))),
@@ -74,7 +74,7 @@ public class PetResource {
     }
 
     @DeleteMapping("/{id}")
-    @Secured("ROLE_admin")
+//    @Secured("ROLE_admin")
     @ApiResponses({
             @ApiResponse(responseCode = "204", description = "Registro excluído com sucesso"),
             @ApiResponse(responseCode = "404", description = "id inválido", content = @Content(schema = @Schema(implementation = Void.class)))
