@@ -4,7 +4,6 @@ import feign.FeignException;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Example;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 import prosper.pets.config.apiclient.RacasApi;
@@ -41,20 +40,18 @@ public class PetService {
         return getListaOuStatus204(petRepository.findByNomeAndNomeDonoContains(nome, nomeDono));
     }
 
-    public Pet criar(Pet novoPet, Authentication authentication) {
+    public Pet criar(Pet novoPet) {
         setRaca(novoPet);
         Pet pet = petRepository.save(novoPet);
-        registrarLog(authentication, "Pet criado: %d", pet.getId());
         return pet;
     }
 
-    public void atualizar(Long idPet, Pet pet, Authentication authentication) {
+    public void atualizar(Long idPet, Pet pet) {
         validarId(idPet);
         setRaca(pet);
         Pet anterior = petRepository.findById(idPet).get();
         BeanUtils.copyProperties(pet, anterior, "id");
         petRepository.save(anterior);
-        registrarLog(authentication, "Pet %d atualizado", pet.getId());
     }
 
     public Pet recuperar(Long idPet) {
@@ -62,10 +59,9 @@ public class PetService {
         return petRepository.findById(idPet).get();
     }
 
-    public void excluir(Long idPet, Authentication authentication) {
+    public void excluir(Long idPet) {
         validarId(idPet);
         petRepository.deleteById(idPet);
-        registrarLog(authentication, "Pet %d excluido", idPet);
     }
 
     protected void setRaca(Pet novoPet) {
@@ -73,13 +69,12 @@ public class PetService {
         novoPet.setIdRaca(raca.getId());
     }
 
-    public void atualizarPeso(Long idPet, Double novoPeso, Authentication authentication) {
+    public void atualizarPeso(Long idPet, Double novoPeso) {
         validarId(idPet);
         if (novoPeso == null || novoPeso <= 0.0) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "novoPeso é obrigatório e deve ser >= 0.2");
         }
         petRepository.atualizarPeso(idPet, novoPeso);
-        registrarLog(authentication, "Pet %d teve o peso atualizado para %.3f", idPet, novoPeso);
     }
 
     protected List<Pet> getListaOuStatus204(List<Pet> pets) {
@@ -87,14 +82,6 @@ public class PetService {
             throw new ResponseStatusException(HttpStatus.NO_CONTENT);
         }
         return pets;
-    }
-
-    protected void registrarLog(Authentication authentication, String descricao, Object... parametros) {
-        try {
-            registroLogService.registrarLog(authentication.getName(), String.format(descricao, parametros));
-        } catch (FeignException ex) {
-            throw new ChamadaApiException("Logs", ex);
-        }
     }
 
     protected void validarId(Long idPet) {
