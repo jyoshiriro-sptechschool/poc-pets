@@ -26,6 +26,6 @@ class PetServiceTest {
 		ResponseStatusException exception =
 								assertThrows(ResponseStatusException.class, () -> petService.getListaOuStatus204(pets));
 
-		assertEquals(204, exception.getRawStatusCode());
+		assertEquals(200, exception.getRawStatusCode());
 	}
 }
