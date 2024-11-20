@@ -8,8 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.annotation.Secured;
-import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import prosper.pets.domain.Pet;
 import prosper.pets.service.PetService;
@@ -54,9 +52,8 @@ public class PetResource {
         @ApiResponse(responseCode = "201", description = "Registro criado com sucesso"),
         @ApiResponse(responseCode = "400", description = "Erro de validação nos dados de entrada", content = @Content(schema = @Schema(implementation = Void.class)))
     })
-    public ResponseEntity<Pet> post(@RequestBody @Valid Pet novoPet,
-                                    Authentication authentication) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(petService.criar(novoPet, authentication));
+    public ResponseEntity<Pet> post(@RequestBody @Valid Pet novoPet) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(petService.criar(novoPet));
     }
 
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -67,9 +64,8 @@ public class PetResource {
         @ApiResponse(responseCode = "400", description = "Erro de validação nos dados de entrada", content = @Content(schema = @Schema(implementation = Void.class)))
     })
     public ResponseEntity<Pet> put(@PathVariable Long id,
-                                   @RequestBody @Valid Pet pet,
-                                   Authentication authentication) {
-        petService.atualizar(id, pet, authentication);
+                                   @RequestBody @Valid Pet pet) {
+        petService.atualizar(id, pet);
         return ResponseEntity.status(HttpStatus.OK).body(petService.recuperar(id));
     }
 
@@ -79,9 +75,8 @@ public class PetResource {
             @ApiResponse(responseCode = "204", description = "Registro excluído com sucesso"),
             @ApiResponse(responseCode = "404", description = "id inválido", content = @Content(schema = @Schema(implementation = Void.class)))
     })
-    public ResponseEntity<Void> delete(@PathVariable Long id,
-                                      Authentication authentication) {
-        petService.excluir(id, authentication);
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
+        petService.excluir(id);
         return ResponseEntity.noContent().build();
     }
 
