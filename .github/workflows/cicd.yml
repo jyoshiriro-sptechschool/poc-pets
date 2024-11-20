@@ -21,7 +21,7 @@ jobs:
         java-version: '11'
 
     - name: Build com Maven
-      run: mvn clean package
+      run: mvn -f api-pets-completa/pom.xml clean package
 
     - name: Gerar artefato Github com o .jar gerado
       uses: actions/upload-artifact@v4
