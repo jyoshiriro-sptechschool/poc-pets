@@ -27,7 +27,7 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: packaged-application
-        path: target/*.jar
+        path: api-pets-completa/target/${{ NOME_ARQUIVO_JAR }}.jar
 
   deploy:
     needs: build
