@@ -54,7 +54,7 @@ jobs:
         host: ${{ secrets.DEPLOY_HOST }}
         username: ubuntu
         key: ${{ secrets.DEPLOY_KEY }}
-        source: "target/*.jar"
+        source: "./*.jar"
         target: "/home/ubuntu/deploy-api/"
 
     - name: Conectar via SSH à EC2 privada para implantar e reiniciar a API
