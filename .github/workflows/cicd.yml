@@ -29,6 +29,12 @@ jobs:
         name: packaged-application
         path: api-pets-completa/target/*.jar
 
+    - name: Gerar artefato Github com os arquivos .sh
+      uses: actions/upload-artifact@v4        
+      with:
+        name: packaged-application2
+        path: .github/scrips/*.sh     
+
   deploy:
     needs: build
     runs-on: ubuntu-latest
@@ -60,5 +66,6 @@ jobs:
     - name: Conectar via SSH à EC2 privada para implantar e reiniciar a API
       run: |
         ssh -o StrictHostKeyChecking=no -i $HOME/${{ secrets.NOME_ARQUIVO_PEM }} ubuntu@${{ secrets.IP_PUBLICO_EC2 }} '
-          pwd
+          scp -i ${{ secrets.NOME_ARQUIVO_PEM }} deploy-api/api-pets-0.0.1-SNAPSHOT.jar ubuntu@10.10.10.85:/home/ubuntu/deploy-api
+          scp -i ${{ secrets.NOME_ARQUIVO_PEM }} deploy-api/*.sh ubuntu@10.10.10.85:/home/ubuntu/deploy-api
         '
