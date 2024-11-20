@@ -81,7 +81,7 @@ jobs:
     - name: Conectar via SSH à EC2 privada para implantar e reiniciar a API
       run: |
         ssh -o StrictHostKeyChecking=no -i $HOME/${{ secrets.NOME_ARQUIVO_PEM }} ubuntu@${{ secrets.DEPLOY_HOST }} '
-          scp -i ${{ secrets.NOME_ARQUIVO_PEM }} deploy-api/api-pets-0.0.1-SNAPSHOT.jar ubuntu@${{ secrets.IP_PRIVADO_EC2 }}:/home/ubuntu/deploy-api
+          scp -i ${{ secrets.NOME_ARQUIVO_PEM }} deploy-api/${{ secrets.NOME_ARQUIVO_JAR }} ubuntu@${{ secrets.IP_PRIVADO_EC2 }}:/home/ubuntu/deploy-api
           scp -i ${{ secrets.NOME_ARQUIVO_PEM }} deploy-api/*.sh ubuntu@${{ secrets.IP_PRIVADO_EC2 }}:/home/ubuntu/deploy-api
           ssh -i ${{ secrets.NOME_ARQUIVO_PEM }} ubuntu@${{ secrets.IP_PRIVADO_EC2 }} "sh /home/ubuntu/deploy-api/api-restart.sh"          
         '
