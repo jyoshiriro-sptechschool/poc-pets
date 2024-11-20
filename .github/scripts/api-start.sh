@@ -1,4 +1,6 @@
 #!/bin/bash
+source "$HOME/.sdkman/bin/sdkman-init.sh"
+
 set -xe
 
 # Nome do processo a ser iniciado (substitua por seu comando)
