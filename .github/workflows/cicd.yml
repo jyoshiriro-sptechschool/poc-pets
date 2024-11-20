@@ -1,4 +1,4 @@
-# é necessário criar as variáveis DEPLOY_HOST, DEPLOY_KEY, NOME_ARQUIVO_PEM, IP_PUBLICO_EC2 e NOME_ARQUIVO_JAR
+# é necessário criar as variáveis DEPLOY_HOST, DEPLOY_KEY, NOME_ARQUIVO_PEM e NOME_ARQUIVO_JAR
 name: CI/CD para Spring Boot com Maven e publicação em EC2
 
 on:
@@ -21,7 +21,7 @@ jobs:
         java-version: '11'
 
     - name: Build com Maven
-      run: mvn -f api-pets-completa/pom.xml clean package
+      run: mvn -f api-pets-completa/pom.xml package
 
     - name: Gerar artefato Github com o .jar gerado
       uses: actions/upload-artifact@v4
@@ -80,7 +80,7 @@ jobs:
 
     - name: Conectar via SSH à EC2 privada para implantar e reiniciar a API
       run: |
-        ssh -o StrictHostKeyChecking=no -i $HOME/${{ secrets.NOME_ARQUIVO_PEM }} ubuntu@${{ secrets.IP_PUBLICO_EC2 }} '
-          scp -i ${{ secrets.NOME_ARQUIVO_PEM }} deploy-api/api-pets-0.0.1-SNAPSHOT.jar ubuntu@10.10.10.85:/home/ubuntu/deploy-api
-          scp -i ${{ secrets.NOME_ARQUIVO_PEM }} deploy-api/*.sh ubuntu@10.10.10.85:/home/ubuntu/deploy-api
+        ssh -o StrictHostKeyChecking=no -i $HOME/${{ secrets.NOME_ARQUIVO_PEM }} ubuntu@${{ secrets.DEPLOY_HOST }} '
+          scp -i ${{ secrets.NOME_ARQUIVO_PEM }} deploy-api/api-pets-0.0.1-SNAPSHOT.jar ubuntu@${{ secrets.IP_PRIVADO_EC2 }}:/home/ubuntu/deploy-api
+          scp -i ${{ secrets.NOME_ARQUIVO_PEM }} deploy-api/*.sh ubuntu@${{ secrets.IP_PRIVADO_EC2 }}:/home/ubuntu/deploy-api
         '
