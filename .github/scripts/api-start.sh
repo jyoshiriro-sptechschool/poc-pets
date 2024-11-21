@@ -1,6 +1,5 @@
 #!/bin/bash
-
-set -xe
+set -x
 
 # Iniciando o processo em background, escrevendo seus logs em /tmp/pocpet.log
 nohup java -jar /home/ubuntu/deploy-api/api-pets-0.0.1-SNAPSHOT.jar  > /tmp/pocpet.log 2>&1 &
