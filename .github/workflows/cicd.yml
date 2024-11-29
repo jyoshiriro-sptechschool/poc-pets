@@ -42,7 +42,7 @@ jobs: # cada 'job' é um agrupamento de steps
         path: .github/scripts/*.sh # todos os arquivos .sh do diretório .github/scripts
 
   deploy:
-    needs: build # segundo grupo de steps
+    needs: test # segundo grupo de steps
     runs-on: ubuntu-latest
 
     steps:
